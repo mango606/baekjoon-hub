@@ -22,3 +22,25 @@
 
  <p><mjx-container class="MathJax" jax="CHTML" style="font-size: 109%; position: relative;"> <mjx-math class="MJX-TEX" aria-hidden="true"><mjx-msup><mjx-mi class="mjx-i"><mjx-c class="mjx-c1D44E TEX-I"></mjx-c></mjx-mi><mjx-script style="vertical-align: 0.363em;"><mjx-mi class="mjx-i" size="s"><mjx-c class="mjx-c1D44F TEX-I"></mjx-c></mjx-mi></mjx-script></mjx-msup></mjx-math><mjx-assistive-mml unselectable="on" display="inline"><math xmlns="http://www.w3.org/1998/Math/MathML"><msup><mi>a</mi><mi>b</mi></msup></math></mjx-assistive-mml><span aria-hidden="true" class="no-mathjax mjx-copytext">$a^b$</span></mjx-container>의 자릿수를 출력한다.</p>
 
+## 1️⃣ 처음 풀이
+문제를 보이는 그대로 직관적으로 생각하여 코드를 작성함.
+```
+a, b = map(int, input().split())
+
+print(len(str(a ** b)))
+```
+
+## 2️⃣ 에러 및 해결
+
+### 1) 에러
+- 시간 초과, 컴파일 에러 등으로 인해 어려움을 겪음. VSC에서 실행할 때는 잘 출력되는데, 시간 초과로 계속 실패해서 여러 언어로 바꿔서 도전했으나 실패함. 시간 초과를 줄이기 위한 방안을 모색함.
+![image](https://github.com/mango606/baekjoon-hub/assets/75062110/8e9dcde0-dca5-4a7d-a733-f1746bae89b8)
+![image](https://github.com/mango606/baekjoon-hub/assets/75062110/4ebc0871-d06a-4920-a0ca-64ccfc656d4f)
+![image](https://github.com/mango606/baekjoon-hub/assets/75062110/75cf2016-487b-4e14-9ad6-0527a0c3bb02)
+
+### 2) 해결 및 풀이
+숫자의 자릿수를 찾기 위해서 로그를 적용한 뒤 올림으로 계산함. float 형식의 오차가 있을 수 있으므로 1을 더해줌.
+그러나 입력 예제인 '4 10'에 대한 출력 결과가 '7'이 아닌 '6'이 나옴. 로그 계산의 실수 오차 때문이므로 이를 보정하기 위해 결과에 작은 값을 더함.
+
+## 3️⃣ 후기
+쉬운 문제라고 생각해 방심하고 시간 초과에 대한 걸 고려하지 못했음. 효율적인 코드를 짜기 위해 언어 및 알고리즘 공부를 열심히 해야 겠음.
