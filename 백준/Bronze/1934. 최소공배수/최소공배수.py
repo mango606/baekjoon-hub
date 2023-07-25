@@ -1,6 +1,9 @@
-import math
-
 t = int(input())
+
 for _ in range(t):
     a, b = map(int, input().split())
-    print(math.lcm(a, b))
+
+    for i in range (1, b+1):
+        if (a*i % b == 0):
+            print(a*i)
+            break
