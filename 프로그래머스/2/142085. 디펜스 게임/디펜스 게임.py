@@ -1,6 +1,6 @@
 def solution(n, k, enemy):
     answer = 0      # 진행한 라운드 수
-    enemys = [0] * 1000001      # 무적권 사용한 수
+    enemys = [0] * 1000001      # 사용한 무적권 수
 
     if len(enemy) <= k:
         return len(enemy)
