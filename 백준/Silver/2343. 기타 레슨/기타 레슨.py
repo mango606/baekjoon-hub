@@ -1,24 +1,26 @@
-def can_record(blue_ray_size, lectures, M):
-    count, temp_sum = 0, 0
+# 주어진 블루레이 크기로 모든 강의를 M개 이하의 블루레이에 담을 수 있는지 확인하는 함수
+def record(size, lectures, M):
+    count, sum = 0, 0
     for lecture in lectures:
-        if lecture > blue_ray_size:
+        if lecture > size:
             return False
-        if temp_sum + lecture > blue_ray_size:
+        if sum + lecture > size:
             count += 1
-            temp_sum = lecture
+            sum = lecture
         else:
-            temp_sum += lecture
-    if temp_sum > 0:
+            sum += lecture
+    if sum > 0:
         count += 1
     return count <= M
 
-def min_blue_ray_size(N, M, lectures):
+# 이진 탐색을 사용하여 필요한 최소 블루레이 크기를 찾는 함수
+def min_size(N, M, lectures):
     low, high = max(lectures), sum(lectures)
     result = high
 
     while low <= high:
         mid = (low + high) // 2
-        if can_record(mid, lectures, M):
+        if record(mid, lectures, M):
             result = mid
             high = mid - 1
         else:
@@ -26,9 +28,6 @@ def min_blue_ray_size(N, M, lectures):
 
     return result
 
-# 입력 받기
 N, M = map(int, input().split())  # 강의의 수 N, 블루레이의 수 M
-lectures = list(map(int, input().split()))  # 강의들의 길이
-
-# 결과 출력
-print(min_blue_ray_size(N, M, lectures))
+lectures = list(map(int, input().split()))  # 강의의 길이
+print(min_size(N, M, lectures))
