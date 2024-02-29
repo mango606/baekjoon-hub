@@ -1,45 +1,25 @@
-import sys
-sys.setrecursionlimit(10**6)  # 파이썬 기본 재귀 한도를 늘림
-
-class Node:
-    def __init__(self, data, x, y):
-        self.data = data
-        self.x = x
-        self.y = y
-        self.left = None
-        self.right = None
-
-def build_tree(nodes):
-    if not nodes:
-        return None
-    root = nodes.pop(0)
-    root_node = Node(root[0], root[1], root[2])
-    left_nodes = [node for node in nodes if node[1] < root_node.x]
-    right_nodes = [node for node in nodes if node[1] > root_node.x]
-    root_node.left = build_tree(left_nodes)
-    root_node.right = build_tree(right_nodes)
-    return root_node
-
-def preorder_traversal(node, result):
-    if node:
-        result.append(node.data)
-        preorder_traversal(node.left, result)
-        preorder_traversal(node.right, result)
-
-def postorder_traversal(node, result):
-    if node:
-        postorder_traversal(node.left, result)
-        postorder_traversal(node.right, result)
-        result.append(node.data)
+from sys import setrecursionlimit
+setrecursionlimit(10**4) # 재귀 호출 한도 늘림
 
 def solution(nodeinfo):
-    nodes_with_info = [(i+1, x, y) for i, (x, y) in enumerate(nodeinfo)]
-    sorted_nodes = sorted(nodes_with_info, key=lambda x: (-x[2], x[1]))
-    
-    root = build_tree(sorted_nodes)
-    
-    preorder_result, postorder_result = [], []
-    preorder_traversal(root, preorder_result)
-    postorder_traversal(root, postorder_result)
-    
-    return [preorder_result, postorder_result]
+    nodes = sorted([(x, y, i + 1) for i, (x, y) in enumerate(nodeinfo)], key=lambda x: (-x[1], x[0]))
+    preorder_list, postorder_list = [], []
+
+    def dfs(nodes):
+        if not nodes:
+            return
+        root = nodes[0] # 노드 선택
+        preorder_list.append(root[2])  # 전위 순회: 루트 방문 후 좌우 서브트리 순회
+
+        # 루트 노드를 기준으로 좌우 서브트리 분할
+        left_subtree = [node for node in nodes if node[0] < root[0]]
+        right_subtree = [node for node in nodes if node[0] > root[0]]
+
+        # 좌우 서브트리에 대해 재귀적으로 dfs 호출
+        dfs(left_subtree)
+        dfs(right_subtree)
+        postorder_list.append(root[2])  # 후위 순회: 좌우 서브트리 순회 후 루트 방문
+
+    dfs(nodes)
+    print(nodes)
+    return [preorder_list, postorder_list]
